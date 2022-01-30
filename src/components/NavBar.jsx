@@ -6,6 +6,7 @@ export default function NavBar() {
     <nav>
       <h1>Weather-App</h1>
       <SearchBar />
+      <h1>Mi ubicación</h1>
     </nav>
   );
 }

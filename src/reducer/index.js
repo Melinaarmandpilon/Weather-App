@@ -1,7 +1,7 @@
 import { SEARCH_BY_NAME } from "../actions/types";
 
 const initialState = {
-  city: [],
+  cities: []
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -10,7 +10,7 @@ export default function rootReducer(state = initialState, action) {
       console.log("action.payload", action.payload);
       return {
         ...state,
-        city: [...action.payload],
+        cities: state.cities.concat(action.payload),
       };
     default:
       return state;

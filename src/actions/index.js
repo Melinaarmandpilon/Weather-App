@@ -4,12 +4,12 @@ import axios from "axios";
 const apiKey = process.env.REACT_APP_APIKEY;
 console.log("apiKey", apiKey);
 
-export function searchCityByName(input) {
-  console.log("cityname", input);
+export function searchCityByName(name) {
+  console.log("cityname", name);
   return async function (dispatch) {
     try {
       let response = await axios.get(
-        `http://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${apiKey}&units=metric`
+        `http://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${apiKey}&units=metric`
       );
       console.log("response.data", response.data);
       return dispatch({

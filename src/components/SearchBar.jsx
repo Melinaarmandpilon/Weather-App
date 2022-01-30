@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchCityByName } from "../actions/index";
+import { searchCityByName } from "../actions";
 import logo from '../assets/search.svg';
 
 export default function SearchBar() {
-  const dispatch = useDispatch();
-  const [input, setInput] = useState("");
+  const dispatch=useDispatch();
+  const [input, setInput] = useState(""); //estado del input
 
   const handleChange = (event) => {
     console.log("event.target.value",event.target.value)
-    event.preventDefault();
     setInput(event.target.value);
   };
 
-  const handleSubmit = () => {
-    // console.log("event.target.value",event.target.value)
-    dispatch(searchCityByName(input));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (input) {
+      dispatch(searchCityByName(input));
+      setInput("");
+    } else {
+      alert("please insert a valid city");
+    }
   };
 
   return (
