@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { getDailyForecast } from "../actions";
-import DailyForecastCard from "./DailyForecastCard";
+import { getDailyForecast } from "../../actions";
+import DailyForecastCard from "../DailyForecastCard/Index";
 
 export default function DailyForecast({ lon, lat }) {
   const dispatch = useDispatch();
@@ -17,9 +17,7 @@ export default function DailyForecast({ lon, lat }) {
     <div>
       <h4>PRONÓSTICO DE 8 DÍA(S)</h4>
       {dailyForecast?.daily?.map((day) => (
-        <DailyForecastCard 
-        day={day}
-        />
+        <DailyForecastCard day={day} />
       ))}
     </div>
   );

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { getByCoord } from "../actions";
-import DailyForecast from "./DailyForecast";
-import Utils from "../utils/WeatherIcon";
+
+import { getByCoord } from "../../actions";
+import DailyForecast from "../DailyForecast/Index";
+import MapView from "../MapView/Index";
+import Utils from "../../utils/WeatherIcon";
 
 export default function CurrentTime({ lon, lat }) {
   // const cityByCoord = useSelector((state) => state.cityByCoord); // ESTADO QUE SE LLENA CUANDO SE BUSCA POR NOMBRE
@@ -30,7 +32,7 @@ export default function CurrentTime({ lon, lat }) {
       function (error) {
         console.log(error);
       },
-      { enableHighAccuracy: true }
+      { enableHighAccuracy: true } //cada vez que pueda va a pedir info desde el GPS, permite una localización más exacta
     );
     dispatch(getByCoord(location.lon, location.lat));
   }, [dispatch, setLocation, location.lon, location.lat]);
@@ -49,11 +51,11 @@ export default function CurrentTime({ lon, lat }) {
           <p>City not found</p>
         </div>
       ) : (
-        <div>
+        <section>
           <p>{cityLocation.name}</p>
           <p>Current time</p>
           <p>{time}</p>
-          <Utils icon={cityLocation?.weather[0]?.icon}/>
+          <Utils icon={cityLocation?.weather[0]?.icon} />
           {/* <img
             src={
               "http://openweathermap.org/img/wn/" +
@@ -71,10 +73,13 @@ export default function CurrentTime({ lon, lat }) {
           <p>Visibility: {Math.round(cityLocation.visibility / 1000)} Km</p>
           <p>Pressure:{cityLocation.main.pressure} mBar</p>
           {/* <p>Dew point:{city.main.feels_like}°C</p> */}
-        </div>
+        </section>
       )}
       <div>
         <DailyForecast lon={location.lon} lat={location.lat} />
+      </div>
+      <div>
+        <MapView lon={location.lon} lat={location.lat} />
       </div>
     </div>
   );

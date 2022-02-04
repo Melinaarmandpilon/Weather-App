@@ -1,12 +1,11 @@
 import React from "react";
-import SearchBar from "./SearchBar";
+import SearchBar from "../SearchBar/Index";
 
 export default function NavBar() {
   return (
     <nav>
-      <h1>Weather-App</h1>
+      <h1>Weather Informer</h1>
       <SearchBar />
-      <h1>Mi ubicación</h1>
     </nav>
   );
 }
