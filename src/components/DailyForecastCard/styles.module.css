@@ -1,0 +1,22 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 10rem; */
+  width: inherit;
+  border: 0.5px solid var(--border2-color);
+  margin: 0 5px 0 5px;
+  border-radius: 10px;
+  box-shadow: rgb(177 151 214 / 0%) 5px 5px 20px;
+    background-color: rgb(51 30 115 / 86%);
+    color: white;
+}
+
+.iconTemp{
+    display: flex;
+    align-items: center;
+}
+
+h6{
+    font-size: 1.5rem;
+}

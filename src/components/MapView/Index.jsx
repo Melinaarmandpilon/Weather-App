@@ -1,49 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import React from "react";
+
+import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import iconLocation from "../../assets/icon.svg";
+import styles from "./Styles.module.css";
+// import { useDispatch } from "react-redux";
 
 export default function MapView({ lat, lon }) {
-  // const position = [lat, lon]
-  const [location, setLocation] = useState({
-    lat: "",
-    lon: "",
-  });
-
-  useEffect(() => {
-    setLocation({
-      lat,
-      lon,
-    });
-    /*  return () => {
-     second;
-   }; */
-  }, [lon, lat]);
+  function ChangeMapView({ coords }) {
+    const map = useMap();
+    map.setView(coords, map.getZoom());
+    return null;
+  }
 
   return (
-    <section>
-      {typeof location.lat === "number" ? (
-        <MapContainer
-          center={[location.lat, location.lon]}
-          zoom={9}
-          scrollWheelZoom={false}>
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker
-            position={[location.lat, location.lon]}
-            icon={L.icon({
-              iconUrl: iconLocation,
-              iconRetinaUrl: iconLocation,
-              iconSize: [40, 30],
-            })}
-          />
-        </MapContainer>
-      ) : (
-        <span>ads</span>
-      )}
-    </section>
+    <MapContainer
+      className={styles.container}
+      center={{ lat, lon }}
+      zoom={9}
+      scrollWheelZoom={false}>
+      <ChangeMapView coords={{ lat, lon }} />
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <Marker
+        position={{ lat, lon }}
+        icon={L.icon({
+          iconUrl: iconLocation,
+          iconRetinaUrl: iconLocation,
+          iconSize: [40, 40],
+        })}
+      />
+    </MapContainer>
   );
 }

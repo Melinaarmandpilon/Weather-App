@@ -1,0 +1,94 @@
+/* .sectionContainer {
+height: 100vh;
+width: 100vw;
+
+} */
+
+.container {
+  display: grid;
+  grid-template-areas: 
+  "current  mapView"
+  "dailyf  dailyf" 
+  ;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns:  1fr 1fr;
+  gap: 1rem;
+  margin: 1.25rem;
+  padding: 1.25rem;
+  overflow: hidden;
+}
+
+
+@media screen and (max-width:700px){
+  .container{
+  display: grid;
+  grid-template-areas: 
+  "current"    
+  "mapView" 
+  "dailyf";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 1.2rem;
+  margin: 1.2rem;
+  }
+
+} 
+
+.mapView{
+  grid-area: mapView;
+}
+
+.containerCards{
+  grid-area:dailyf ;
+}
+
+.currentTime{
+    grid-area:current ;
+    border: 1px solid var(--border2-color);
+    border-radius: 10px;
+    background-color: var(--background1-color);
+    color: var(--text-color);
+    padding: 1.25rem;
+}
+
+.currentTemp{
+  display: flex;
+  align-items: center;
+}
+
+h2, h3, h5, p{
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 700;
+  margin: 0px;
+ 
+}
+
+.icon{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+  flex-wrap: wrap;
+  
+}
+.cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.description{
+  display: flex;
+  align-items: center;
+}
+
+.h1{
+  background-color: #4f3d86;
+  padding: 5px 0 5px 0;
+  color: white;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 50px;
+}

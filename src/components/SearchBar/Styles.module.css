@@ -1,0 +1,28 @@
+.searchInput {
+  border: 2px solid var(--border-color);
+  outline: none;
+  width: 20vw;
+  height: 2.5vh;
+  /* border-right: none; */
+  padding: 5px;
+  border-radius: 10px 0 0 10px;
+  color: var(--border-color);
+  font-size: 16px;
+}
+
+.search {
+  width: 60%;
+  display: flex;
+  position: relative;
+}
+
+.searchButton {
+  width: 50px;
+  height: 40px;
+  border: 2px solid var(--border-color);
+  text-align: center;
+  color: #fff;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+  font-size: 20px;
+}

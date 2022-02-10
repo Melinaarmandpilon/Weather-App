@@ -1,41 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect /* , useState */ } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+
 
 import { getByCoord } from "../../actions";
 import DailyForecast from "../DailyForecast/Index";
 import MapView from "../MapView/Index";
 import Utils from "../../utils/WeatherIcon";
+import pressure from "../../assets/pressure.png";
+import humidity from "../../assets/humidity.png";
+import visibility from "../../assets/Visibility.png";
+import wind from "../../assets/wind.png";
+import styles from "./Styles.module.css";
 
-export default function CurrentTime({ lon, lat }) {
-  // const cityByCoord = useSelector((state) => state.cityByCoord); // ESTADO QUE SE LLENA CUANDO SE BUSCA POR NOMBRE
+export default function CurrentTime() {
   const cityLocation = useSelector((state) => state.cityLocation);
   console.log("cityLocation", cityLocation);
 
   const dispatch = useDispatch();
 
-  // ESTADO LOCAL POR LOCALIZACIÓN
-  const [location, setLocation] = useState({
-    lon: 0,
-    lat: 0,
-  });
-
-  //ANTES DE RENDIZAR HOME ME PIDE LA LOCALIZACION
+  //ANTES DE RENDIZAR ME PIDE LA LOCALIZACION
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       function (position) {
-        setLocation({
-          lon: position.coords.longitude,
-          lat: position.coords.latitude,
-        });
+        dispatch(
+          getByCoord(position.coords.longitude, position.coords.latitude)
+        );
       },
       function (error) {
         console.log(error);
       },
-      { enableHighAccuracy: true } //cada vez que pueda va a pedir info desde el GPS, permite una localización más exacta
+      { enableHighAccuracy: false } //cada vez que pueda va a pedir info desde el GPS, permite una localización más exacta
     );
-    dispatch(getByCoord(location.lon, location.lat));
-  }, [dispatch, setLocation, location.lon, location.lat]);
+  }, [dispatch]);
 
   //HORA ACTUAL
   var dt = new Date();
@@ -45,42 +42,90 @@ export default function CurrentTime({ lon, lat }) {
     hour > 12 ? hour - 12 + ":" + minute + " PM" : hour + ":" + minute + " AM";
 
   return (
-    <div>
+    <section >
       {Object.keys(cityLocation).length === 0 ? (
-        <div>
-          <p>City not found</p>
-        </div>
+        <p>City not found</p>
       ) : (
-        <section>
-          <p>{cityLocation.name}</p>
-          <p>Current time</p>
-          <p>{time}</p>
-          <Utils icon={cityLocation?.weather[0]?.icon} />
-          {/* <img
-            src={
-              "http://openweathermap.org/img/wn/" +
-              cityLocation?.weather[0]?.icon +
-              "@2x.png"
-            }
-            alt="not found"
-          /> */}
-          <p>{cityLocation.main.temp}°C</p>
-          <h4>{cityLocation.weather[0].description}</h4>
-          <p>Feels like: {cityLocation.main.feels_like}°C</p>
-          {/* PONER ICONOS */}
-          <p>Wind: {Math.round(cityLocation.wind.speed * 3.6)} Km/h</p>
-          <p>Humidity: {cityLocation.main.humidity}%</p>
-          <p>Visibility: {Math.round(cityLocation.visibility / 1000)} Km</p>
-          <p>Pressure:{cityLocation.main.pressure} mBar</p>
-          {/* <p>Dew point:{city.main.feels_like}°C</p> */}
-        </section>
+        <div className={styles.container}>
+          <div className={styles.currentTime}>
+            <h2>{cityLocation.name}</h2>
+            <h3>Current time</h3>
+            <h5>{time}</h5>
+            <div className={styles.currentTemp}>
+              <div>
+                <Utils
+                  icon={cityLocation?.weather[0]?.icon}
+                  width="130px"
+                  height="130px"
+                />
+                <h3>{Math.round(cityLocation.main.temp)}°C</h3>
+              </div>
+              <div>
+                <h4>{cityLocation.weather[0].description}</h4>
+                <p>Feels like: {cityLocation.main.feels_like}°C</p>
+              </div>
+            </div>
+            <div className={styles.icon}>
+              <div className={styles.description}>
+                <img src={wind} width="40px" height="40px" alt="not found" />
+                <div>
+                  <p>Wind</p>
+                  <p> {Math.round(cityLocation.wind.speed * 3.6)} Km/h</p>
+                </div>
+              </div>
+              <div className={styles.description}>
+                <img
+                  src={humidity}
+                  width="40px"
+                  height="40px"
+                  alt="not found"
+                />
+                <div>
+                  <p>Humidity</p>
+                  <p>{cityLocation.main.humidity}%</p>
+                </div>
+              </div>
+              <div className={styles.description}>
+                <img
+                  src={visibility}
+                  width="40px"
+                  height="40px"
+                  alt="not found"
+                />
+                <div>
+                  <p>Visibility</p>
+                  <p> {Math.round(cityLocation.visibility / 1000)} Km</p>
+                </div>
+              </div>
+              <div className={styles.description}>
+                <img
+                  src={pressure}
+                  width="40px"
+                  height="40px"
+                  alt="not found"
+                />
+                <div>
+                  <p>Pressure</p>
+                  <p>{cityLocation.main.pressure} mBar</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <MapView
+            className={styles.mapView}
+            lat={cityLocation?.coord?.lat}
+            lon={cityLocation?.coord?.lon}
+          />
+          <div className={styles.containerCards}>
+            <h1 className={styles.h1}>Daily Forecast</h1>
+            <DailyForecast
+              className={styles.cards}
+              lat={cityLocation.coord?.lat}
+              lon={cityLocation.coord?.lon}
+            />
+          </div>
+        </div>
       )}
-      <div>
-        <DailyForecast lon={location.lon} lat={location.lat} />
-      </div>
-      <div>
-        <MapView lon={location.lon} lat={location.lat} />
-      </div>
-    </div>
+    </section>
   );
 }

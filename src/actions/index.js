@@ -9,7 +9,7 @@ export function searchCityByName(name) {
   return async function (dispatch) {
     try {
       let response = await axios.get(
-        `http://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${apiKey}&units=metric&lang=sp,es`
+        `http://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${apiKey}&units=metric&lang=en`
       );
       // console.log("response.data", response.data);
       return dispatch({
@@ -27,7 +27,7 @@ export function getByCoord (lon, lat){
   return async function (dispatch){
     try {
       // const response= await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${apiKey}&units=metric`)
-      const response= await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=sp`)
+      const response= await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=en`)
       console.log("response.data", response.data);
       return dispatch({
         type:GET_BY_COORD,
@@ -43,7 +43,7 @@ export function getByCoord (lon, lat){
 export function getDailyForecast (lon, lat){
   return async function (dispatch){
     try {
-    const response= await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${apiKey}&units=metric&lang=sp`)
+    const response= await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${apiKey}&units=metric&lang=en`)
       console.log("response.data en getCityByCoord", response.data);
       return dispatch({
         type:GET_DAILY_FORECAST,
