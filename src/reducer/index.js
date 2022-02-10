@@ -1,7 +1,6 @@
 import { GET_BY_COORD, GET_DAILY_FORECAST, SEARCH_BY_NAME } from "../actions/types";
 
 const initialState = {
-  city: {},
   cityLocation:{},
   dailyForecast:{},
 };
